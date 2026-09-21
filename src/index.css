@@ -636,9 +636,10 @@ p { margin: 0; }
   color: #fff;
 }
 
+/* Always claims its own line so revealing it never moves the label or the ? button. */
 .leaf-def {
-  flex: 1 1 10rem;
-  min-width: min(100%, 10rem);
+  flex: 1 1 100%;
+  min-width: 100%;
   margin: 0;
   padding: 5px 8px;
   border-radius: 8px;
@@ -655,6 +656,40 @@ p { margin: 0; }
 .vtree-row.chip .leaf-name {
   flex: 1;
   min-width: 0;
+}
+
+/*
+ * Tree leaf definitions land in this strip instead of inside the leaf. The strip
+ * sits below every chip in the group and keeps a reserved height, so hovering or
+ * swapping between leaves cannot move a tree row under the pointer.
+ */
+.leaf-def-slot {
+  display: flex;
+  margin: 6px 0 2px 27px;
+  min-height: 3.3rem;
+}
+
+.leaf-def.is-slot {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: block;
+}
+
+.leaf-def-term {
+  margin-right: 6px;
+  font-weight: 700;
+  color: var(--color-indigo);
+}
+
+.leaf-def-body {
+  display: inline-block;
+  max-width: 100%;
+  animation: leaf-def-in var(--dur-med) var(--ease) both;
+}
+
+@keyframes leaf-def-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: none; }
 }
 
 .offer-gets li {

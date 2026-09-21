@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { iconFor } from "../data/leafIcons.js";
 import { Icon } from "../icons.jsx";
-import { LeafText } from "./LeafText.jsx";
+import { LeafDefSlot, LeafText, leafTipEntry } from "./LeafText.jsx";
+import { useLeafTip } from "./LeafTipContext.jsx";
 import { OfferingPanel } from "./OfferingPanel.jsx";
 
 export function NestedTree({ rootLabel, nodes, ariaLabel }) {
@@ -11,6 +12,13 @@ export function NestedTree({ rootLabel, nodes, ariaLabel }) {
   const [pinId, setPinId] = useState(nodes[0]?.id);
   const activeId = hoverId || pinId || openId;
   const active = nodes.find((node) => node.id === activeId) || nodes[0];
+  const { hoverTip, leaveTip, focusTip, blurTip, clearTips } = useLeafTip();
+  const defSlotId = `leafdef${useId().replace(/[^a-zA-Z0-9_-]+/g, "-")}`;
+
+  // A collapsing branch unmounts its leaves; drop any definition they owned.
+  useEffect(() => {
+    clearTips();
+  }, [openId, clearTips]);
 
   function open(id, pin = false) {
     setHoverId(id);
@@ -52,16 +60,33 @@ export function NestedTree({ rootLabel, nodes, ariaLabel }) {
                       ) : null}
                     </button>
                     {openNode && (
-                      <ul className="vtree-list chips" role="group">
-                        {node.gets.map((item) => (
-                          <li key={item} className="vtree-node">
-                            <span className="vtree-row chip static" role="treeitem">
-                              <Icon name={iconFor(item)} size={14} strokeWidth={2} className="leaf-ico" />
-                              <LeafText label={item} />
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+                      <>
+                        <ul className="vtree-list chips" role="group">
+                          {node.gets.map((item) => {
+                            const chipId = `${node.id}:${item}`;
+                            const tipEntry = leafTipEntry(item, chipId, defSlotId);
+                            return (
+                              <li key={item} className="vtree-node">
+                                <span
+                                  className="vtree-row chip static"
+                                  role="treeitem"
+                                  onMouseOver={() => hoverTip(tipEntry)}
+                                  onMouseLeave={() => leaveTip(chipId)}
+                                  onFocus={() => focusTip(tipEntry)}
+                                  onBlur={(event) => {
+                                    if (event.currentTarget.contains(event.relatedTarget)) return;
+                                    blurTip(chipId);
+                                  }}
+                                >
+                                  <Icon name={iconFor(item)} size={14} strokeWidth={2} className="leaf-ico" />
+                                  <LeafText label={item} tipKey={chipId} slotId={defSlotId} />
+                                </span>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                        <LeafDefSlot slotId={defSlotId} />
+                      </>
                     )}
                   </li>
                 );

@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { pillars } from "../data/content.js";
 import { pillarOutcomes, serviceOutcomes } from "../data/offers.js";
 import { iconFor } from "../data/leafIcons.js";
 import { Icon } from "../icons.jsx";
-import { LeafText } from "./LeafText.jsx";
+import { LeafDefSlot, LeafText, leafTipEntry } from "./LeafText.jsx";
+import { useLeafTip } from "./LeafTipContext.jsx";
 import { OfferingPanel } from "./OfferingPanel.jsx";
 
 const ROOT = "root";
@@ -18,6 +19,8 @@ export function ServiceTree() {
   const [hover, setHover] = useState({ pillarId: pillars[1].id, service: null, chip: null });
   const [pin, setPin] = useState({ pillarId: pillars[1].id, service: null });
   const [focusId, setFocusId] = useState(nodeId("pillar", pillars[1].id));
+  const { hoverTip, leaveTip, focusTip, blurTip, clearTips } = useLeafTip();
+  const defSlotId = `leafdef${useId().replace(/[^a-zA-Z0-9_-]+/g, "-")}`;
 
   const view = hover.pillarId || pin.pillarId ? hover : pin;
   const pillar = pillars.find((item) => item.id === (view.pillarId || pin.pillarId)) || pillars[1];
@@ -26,6 +29,11 @@ export function ServiceTree() {
 
   const expandedPillar = view.pillarId || pin.pillarId;
   const expandedService = view.service || pin.service;
+
+  // A collapsing branch unmounts its leaves; drop any definition they owned.
+  useEffect(() => {
+    clearTips();
+  }, [expandedPillar, expandedService, clearTips]);
 
   const visibleIds = useMemo(() => {
     const ids = [ROOT];
@@ -144,7 +152,7 @@ export function ServiceTree() {
             </span>
           ))}
         </div>
-        <p className="tree-hint">Hover a branch to open it. Click the ? on a technical term for a short definition. Click a branch to pin. Arrow keys move; Enter pins.</p>
+        <p className="tree-hint">Hover a branch to open it. Hover a technical term for a plain-language definition; click its ? to keep it open. Click a branch to pin. Arrow keys move; Enter pins.</p>
 
         <ul className="vtree-list" role="group">
           <li className={`vtree-node root on-path`}>
@@ -218,27 +226,43 @@ export function ServiceTree() {
                                 <span>{entry.name}</span>
                               </button>
                               {leafOpen && (
-                                <ul className="vtree-list chips" role="group">
-                                  {entry.chips.map((chip) => (
-                                    <li key={chip} className={`vtree-node ${view.chip === chip ? "on-path" : ""}`}>
-                                      <span
-                                        role="treeitem"
-                                        tabIndex={-1}
-                                        data-node={nodeId("chip", item.id, `${entry.name}:${chip}`)}
-                                        className={`vtree-row chip ${view.chip === chip ? "live" : ""}`}
-                                        aria-selected={focusId === nodeId("chip", item.id, `${entry.name}:${chip}`)}
-                                        onMouseEnter={() => activate({ pillarId: item.id, service: entry.name, chip })}
-                                        onFocus={() => {
-                                          setFocusId(nodeId("chip", item.id, `${entry.name}:${chip}`));
-                                          activate({ pillarId: item.id, service: entry.name, chip });
-                                        }}
-                                      >
-                                        <Icon name={iconFor(chip)} size={14} strokeWidth={2} className="leaf-ico" />
-                                        <LeafText label={chip} />
-                                      </span>
-                                    </li>
-                                  ))}
-                                </ul>
+                                <>
+                                  <ul className="vtree-list chips" role="group">
+                                    {entry.chips.map((chip) => {
+                                      const chipId = nodeId("chip", item.id, `${entry.name}:${chip}`);
+                                      const tipEntry = leafTipEntry(chip, chipId, defSlotId);
+                                      return (
+                                        <li key={chip} className={`vtree-node ${view.chip === chip ? "on-path" : ""}`}>
+                                          <span
+                                            role="treeitem"
+                                            tabIndex={-1}
+                                            data-node={chipId}
+                                            className={`vtree-row chip ${view.chip === chip ? "live" : ""}`}
+                                            aria-selected={focusId === chipId}
+                                            onMouseEnter={() => activate({ pillarId: item.id, service: entry.name, chip })}
+                                            onMouseOver={() => hoverTip(tipEntry)}
+                                            onMouseLeave={() => leaveTip(chipId)}
+                                            onFocus={(event) => {
+                                              focusTip(tipEntry);
+                                              // Focus bubbles up from the ? button; only the row itself claims the roving tabindex.
+                                              if (event.target !== event.currentTarget) return;
+                                              setFocusId(chipId);
+                                              activate({ pillarId: item.id, service: entry.name, chip });
+                                            }}
+                                            onBlur={(event) => {
+                                              if (event.currentTarget.contains(event.relatedTarget)) return;
+                                              blurTip(chipId);
+                                            }}
+                                          >
+                                            <Icon name={iconFor(chip)} size={14} strokeWidth={2} className="leaf-ico" />
+                                            <LeafText label={chip} tipKey={chipId} slotId={defSlotId} />
+                                          </span>
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                  <LeafDefSlot slotId={defSlotId} />
+                                </>
                               )}
                             </li>
                           );
