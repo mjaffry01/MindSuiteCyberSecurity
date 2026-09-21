@@ -56,7 +56,7 @@ export function Hero() {
             <div className="orbit-ring inner" />
             <div className="orbit-pulse" />
             <div className="orbit-core">
-              <img src="/Mindsuite-logo-white.png" alt="MindSuite" className="orbit-logo" />
+              <img src={`${import.meta.env.BASE_URL}Mindsuite-logo-white.png`} alt="MindSuite" className="orbit-logo" />
               <span>Unified cybersecurity</span>
             </div>
             {orbitNodes.map((node) => (

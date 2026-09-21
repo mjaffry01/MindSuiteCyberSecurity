@@ -1,11 +1,11 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-export default defineConfig({
-  base: "/mindsuite-cybersecurity/",
+export default defineConfig(({ command }) => ({
+  base: command === "build" ? "/MindSuiteCyberSecurity/" : "/",
   plugins: [react()],
   server: {
     port: 5173,
     open: false,
   },
-});
+}));

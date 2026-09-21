@@ -65,7 +65,7 @@ export function ServiceTree() {
           onMouseEnter={openRoot}
           onFocus={openRoot}
         >
-          <img src="/Mindsuite-logo-white.png" alt="MindSuite" className="hub-logo" />
+          <img src={`${import.meta.env.BASE_URL}Mindsuite-logo-white.png`} alt="MindSuite" className="hub-logo" />
           <span>Explore the portfolio</span>
         </button>
       </div>
