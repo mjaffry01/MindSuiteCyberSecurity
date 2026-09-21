@@ -1,6 +1,26 @@
-import { frameworks, steps } from "../data/content.js";
+import { steps } from "../data/content.js";
+import { motionGets } from "../data/offers.js";
+import { NestedTree } from "./NestedTree.jsx";
 import { useInView } from "../hooks.js";
-import { Icon } from "../icons.jsx";
+
+const motionOutcomes = {
+  Assess: "The board can fund the right work, in the right order.",
+  Architect: "Access, cloud, and OT are designed the way the estate actually runs.",
+  Protect: "Controls sit on networks, endpoints, data, and models.",
+  Detect: "Signals become decisions in one SOC.",
+  Recover: "Containment, investigation, and restore are rehearsed before they are needed.",
+};
+
+const motionNodes = steps.map((step) => ({
+  id: step.title,
+  title: step.title,
+  icon: step.icon,
+  kicker: "This step",
+  what: step.text,
+  gets: motionGets[step.title],
+  outcome: motionOutcomes[step.title],
+  cta: "Talk to a specialist",
+}));
 
 export function Approach() {
   const [ref, visible] = useInView();
@@ -10,33 +30,14 @@ export function Approach() {
       <div className="wrap">
         <div className={`section-head ${visible ? "in" : ""}`}>
           <div>
-            <p className="eyebrow">How we work</p>
-            <h2>From first risk picture to a practiced recovery.</h2>
+            <p className="eyebrow">The path</p>
+            <h2>Start with the risk. Finish with a rehearsal.</h2>
           </div>
           <p>
-            Five motions. Each one is a buyable program — named by the work, not by a
-            sequence on a slide.
+            Each step has deliverables. Open one to see them.
           </p>
         </div>
-        <div className={`motion-band ${visible ? "in" : ""}`}>
-          {steps.map((step) => (
-            <article className="motion-item" key={step.title}>
-              <span className="icon-blob">
-                <Icon name={step.icon} />
-              </span>
-              <h3>{step.title}</h3>
-              <p>{step.text}</p>
-            </article>
-          ))}
-        </div>
-        <ul className={`frame-pills ${visible ? "in" : ""}`} aria-label="Frameworks">
-          {frameworks.map((item) => (
-            <li key={item.name}>
-              <strong>{item.name}</strong>
-              <span>{item.detail}</span>
-            </li>
-          ))}
-        </ul>
+        <NestedTree rootLabel="The path" nodes={motionNodes} ariaLabel="How the work proceeds" />
       </div>
     </section>
   );

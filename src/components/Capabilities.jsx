@@ -1,4 +1,5 @@
-import { capabilities } from "../data/content.js";
+import { capabilities, frameworks } from "../data/content.js";
+import { iconFor } from "../data/leafIcons.js";
 import { useInView } from "../hooks.js";
 import { Icon } from "../icons.jsx";
 
@@ -12,11 +13,11 @@ export function Capabilities() {
         <div className={`section-head ${visible ? "in" : ""}`}>
           <div>
             <p className="eyebrow">What the board asks for</p>
-            <h2>Strategic offers, not footnotes.</h2>
+            <h2>Leadership and detection in the first conversation.</h2>
           </div>
           <p>
-            Leadership, generative AI risk, intelligence, ransomware rehearsal, and
-            offensive testing sit in the first conversation — next to a single SOC story.
+            Fractional CISO, generative AI risk, ransomware rehearsal, and red
+            teaming belong in the opening meeting — not a later annex.
           </p>
         </div>
         <div className={`cap-layout ${visible ? "in" : ""}`}>
@@ -44,6 +45,15 @@ export function Capabilities() {
             ))}
           </div>
         </div>
+        <ul className="frame-pills" aria-label="Core frameworks">
+          {frameworks.map((item) => (
+            <li key={item.name}>
+              <Icon name={iconFor(item.name)} size={14} strokeWidth={2} className="leaf-ico" />
+              <strong>{item.name}</strong>
+              <span>{item.detail}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

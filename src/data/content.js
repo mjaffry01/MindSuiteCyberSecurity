@@ -7,10 +7,10 @@ export const navItems = [
 ];
 
 export const heroStats = [
-  { value: "24", suffix: "/7", label: "SOC monitoring" },
-  { value: "5", suffix: "", label: "Operating pillars" },
-  { value: "26", suffix: "+", label: "Named services" },
-  { value: "6", suffix: "", label: "Core frameworks" },
+  { value: "24", suffix: "/7", label: "SOC monitoring", icon: "radar" },
+  { value: "5", suffix: "", label: "Areas of coverage", icon: "layers" },
+  { value: "26", suffix: "+", label: "Security services", icon: "boxes" },
+  { value: "6", suffix: "", label: "Core frameworks", icon: "file-badge" },
 ];
 
 export const pillars = [
@@ -21,7 +21,7 @@ export const pillars = [
     color: "#DD8FBD",
     icon: "crosshair",
     summary:
-      "Know what can hurt you before an attacker does. Assessments, intelligence, red teaming, and scoped penetration testing — each as a distinct offer.",
+      "Know what can hurt you before an attacker does. Threat assessments, intelligence, red teaming, and scoped penetration testing.",
     services: [
       {
         name: "Threat Assessments",
@@ -56,7 +56,7 @@ export const pillars = [
     color: "#785DA8",
     icon: "shield",
     summary:
-      "The run-the-business defensive stack: networks, endpoints, identity, cloud, data, OT, and Zero Trust — without mixing scanning into protection.",
+      "Networks, endpoints, identity, cloud, data, OT, and Zero Trust — protection of the running estate, kept separate from scanning.",
     services: [
       {
         name: "Network & Endpoint Security",
@@ -115,12 +115,12 @@ export const pillars = [
     color: "#5650A2",
     icon: "scale",
     summary:
-      "One GRC program. Strategy, risk, audit, privacy, and a vCISO the board can hire — not four competing compliance headings.",
+      "Strategy, risk, audit, privacy, and a vCISO the board can hire — one GRC program.",
     services: [
       {
         name: "Compliance Services",
         icon: "badge",
-        blurb: "ISO 27001, SOC 2, GDPR, PCI DSS, HIPAA — one mapped program with evidence, not four page sections.",
+        blurb: "ISO 27001, SOC 2, GDPR, PCI DSS, HIPAA — one mapped program with evidence.",
         chips: ["ISO 27001", "SOC 2", "GDPR", "PCI / HIPAA"],
       },
       {
@@ -138,7 +138,7 @@ export const pillars = [
       {
         name: "Audit & Assurance",
         icon: "clipboard",
-        blurb: "Readiness, control testing, and evidence collection without a second compliance brand.",
+        blurb: "Readiness, control testing, and evidence collection for the auditor and the board.",
         chips: ["Readiness", "Control test", "Evidence", "Findings close"],
       },
       {
@@ -156,7 +156,7 @@ export const pillars = [
     color: "#54C9EB",
     icon: "scan",
     summary:
-      "Find what is open, prioritize what matters, and close it. Application security is a named service — not a buried DAST/SAST bullet.",
+      "Find what is open, prioritize what matters, and close it — including application security.",
     services: [
       {
         name: "Vulnerability Management",
@@ -191,7 +191,7 @@ export const pillars = [
     color: "#9D8BC9",
     icon: "pulse",
     summary:
-      "Operate through an attack. Incident response, forensics, ransomware readiness, and business continuity as a funded program.",
+      "Operate through an attack. Incident response, forensics, ransomware readiness, and business continuity.",
     services: [
       {
         name: "Incident Response",
@@ -233,7 +233,7 @@ export const capabilities = [
     icon: "crown",
     tag: "Leadership",
     title: "vCISO & board advisory",
-    text: "Fractional security leadership, risk narratives for directors, and a roadmap tied to maturity — not a tool list.",
+    text: "Fractional security leadership, risk narratives for directors, and a roadmap tied to maturity.",
   },
   {
     id: "ai",
@@ -261,14 +261,14 @@ export const capabilities = [
     icon: "swords",
     tag: "Offense",
     title: "Red & purple teaming",
-    text: "Objective-based adversary emulation and breach-and-attack simulation, kept distinct from a scoped pen test.",
+    text: "Objective-based adversary emulation and breach-and-attack simulation — separate from a scoped pen test.",
   },
   {
     id: "soc",
     icon: "monitor",
     tag: "Detect",
-    title: "One SOC, one story",
-    text: "A single 24/7 SIEM and SOC offer. Monitoring is not sold twice under two names.",
+    title: "One 24/7 SOC",
+    text: "SIEM and SOC monitoring in one place. The board and operations see the same picture.",
   },
 ];
 
@@ -291,7 +291,7 @@ export const steps = [
   {
     icon: "radar",
     title: "Detect",
-    text: "24/7 SOC, SIEM, and intelligence in one motion so signals become decisions.",
+    text: "24/7 SOC, SIEM, and intelligence together so signals become decisions.",
   },
   {
     icon: "siren",
@@ -351,18 +351,18 @@ export const frameworks = [
 export const reasons = [
   {
     icon: "layers",
-    title: "One map, not five menus",
-    text: "Assess, protect, govern, expose, recover. Buyers see a portfolio instead of competing cards.",
+    title: "One practice, not competing teams",
+    text: "Assessment, protection, governance, exposure, and recovery sit together. You do not pay twice for the same work.",
   },
   {
     icon: "crown",
-    title: "Strategic and technical",
-    text: "vCISO and board advisory sit next to EDR, AppSec, and the SOC — the level MindSuite is built to deliver.",
+    title: "Strategy beside operations",
+    text: "vCISO and board advisory sit next to EDR, AppSec, and the SOC — one conversation from directors to the floor.",
   },
   {
     icon: "badge",
-    title: "Industry language",
-    text: "Endpoint means protection. Vulnerability management means scanning. Encryption is a control, not a flagship product.",
+    title: "Words that match the work",
+    text: "Endpoint protection is not a scan. Vulnerability management finds what is open. Encryption is a control, not a product name.",
   },
 ];
 

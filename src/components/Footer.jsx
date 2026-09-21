@@ -9,7 +9,7 @@ export function Footer() {
           <a className="brand" href="#top">
             <BrandLogo onDark />
           </a>
-          <p>Enterprise digital transformation and a full cybersecurity portfolio from Hyderabad.</p>
+          <p>Enterprise cybersecurity from Hyderabad.</p>
         </div>
         <div>
           <strong>Navigate</strong>

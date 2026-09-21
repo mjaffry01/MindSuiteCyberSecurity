@@ -28,7 +28,7 @@ export function Contact() {
           <h2>Tell us what the board needs to decide next.</h2>
           <p className="lead">
             Assessment, a vCISO retainer, AI risk, or a full operating program. We
-            reply with a scoped next step — not a 40-card menu.
+            reply with a scoped next step.
           </p>
           <ul className="contact-meta">
             <li>
@@ -86,7 +86,7 @@ export function Contact() {
               <textarea id="message" name="message" value={form.message} onChange={update} rows="3" placeholder="What should we help you decide?" />
             </label>
             <button className="btn btn-primary full" type="submit">
-              Request a briefing <ArrowRight size={18} />
+              Request a conversation <ArrowRight size={18} />
             </button>
           </form>
         )}

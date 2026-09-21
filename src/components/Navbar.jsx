@@ -40,7 +40,7 @@ export function Navbar({ active }) {
         </nav>
         <div className="nav-actions">
           <a className="nav-cta" href="#contact">
-            Contact Us
+            Talk to us
           </a>
           <button
             className="nav-toggle"
@@ -61,7 +61,7 @@ export function Navbar({ active }) {
           </a>
         ))}
         <a className="nav-cta drawer-cta" href="#contact" onClick={() => setOpen(false)}>
-          Contact Us
+          Talk to us
         </a>
       </div>
     </header>

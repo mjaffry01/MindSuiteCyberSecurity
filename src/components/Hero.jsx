@@ -11,14 +11,21 @@ const orbitNodes = [
   { icon: "swords", label: "Red team", className: "sat-5" },
 ];
 
-function Stat({ value, suffix, label }) {
+function Stat({ value, suffix, label, icon }) {
   return (
     <div className="stat">
-      <strong>
-        {value}
-        {suffix}
-      </strong>
-      <span>{label}</span>
+      {icon ? (
+        <span className="stat-ico" aria-hidden="true">
+          <Icon name={icon} size={16} strokeWidth={2} />
+        </span>
+      ) : null}
+      <div>
+        <strong>
+          {value}
+          {suffix}
+        </strong>
+        <span>{label}</span>
+      </div>
     </div>
   );
 }
@@ -33,20 +40,20 @@ export function Hero() {
           <div className={`hero-copy-wrap ${visible ? "in" : ""}`}>
             <p className="eyebrow">Enterprise cybersecurity</p>
             <h1>
-              One portfolio.
-              <span>Board to SOC.</span>
+              The board and the SOC
+              <span>share one picture.</span>
             </h1>
             <p className="hero-copy">
-              MindSuite protects, governs, and recovers the enterprise as a single
-              practice — vCISO, AI security, threat intelligence, and 24/7 operations
-              under one map. No duplicate cards. No buried AppSec.
+              vCISO advisory, AI security, and threat intelligence sit with 24/7
+              monitoring. Directors fund the right work. Operators detect, contain,
+              and recover.
             </p>
             <div className="hero-actions">
               <a className="btn btn-primary" href="#services">
-                Explore services <ArrowRight size={18} />
+                See what is covered <ArrowRight size={18} />
               </a>
               <a className="btn btn-ghost" href="#approach">
-                See the approach <Play size={16} />
+                How work proceeds <Play size={16} />
               </a>
             </div>
           </div>
@@ -57,7 +64,7 @@ export function Hero() {
             <div className="orbit-pulse" />
             <div className="orbit-core">
               <img src={`${import.meta.env.BASE_URL}Mindsuite-logo-white.png`} alt="MindSuite" className="orbit-logo" />
-              <span>Unified cybersecurity</span>
+              <span>One practice</span>
             </div>
             {orbitNodes.map((node) => (
               <div className={`sat ${node.className}`} key={node.label}>
