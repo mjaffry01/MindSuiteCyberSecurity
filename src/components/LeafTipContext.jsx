@@ -19,6 +19,8 @@ const LeafTipContext = createContext({
   isExpanded: () => false,
   hoverTip: () => {},
   leaveTip: () => {},
+  clearHover: () => {},
+  clearFocus: () => {},
   focusTip: () => {},
   blurTip: () => {},
   pinTip: () => {},
@@ -28,7 +30,10 @@ const LeafTipContext = createContext({
 export function LeafTipProvider({ children }) {
   const [state, setState] = useState(EMPTY);
 
+  // A leaf with no definition never writes to the shared state, so pointing at one
+  // cannot blank or steal the definition a sibling is showing.
   const hoverTip = useCallback((entry) => {
+    if (!entry?.tip) return;
     setState((s) =>
       s.hover?.id === entry.id
         ? s
@@ -45,6 +50,7 @@ export function LeafTipProvider({ children }) {
   }, []);
 
   const focusTip = useCallback((entry) => {
+    if (!entry?.tip) return;
     setState((s) =>
       s.focus?.id === entry.id
         ? s
@@ -65,6 +71,28 @@ export function LeafTipProvider({ children }) {
       s.pin?.id === entry.id
         ? { ...s, pin: null, dismissedId: entry.id }
         : { ...s, pin: entry, dismissedId: null },
+    );
+  }, []);
+
+  /**
+   * Group-scoped release. A leaf group clears hover only when the pointer leaves the
+   * whole group, not each individual leaf, so sweeping across tipless leaves between
+   * two defined terms leaves the strip showing the last definition instead of
+   * flickering off and on again.
+   */
+  const clearHover = useCallback(() => {
+    setState((s) =>
+      s.hover
+        ? { ...s, hover: null, dismissedId: s.dismissedId === s.hover.id ? null : s.dismissedId }
+        : s,
+    );
+  }, []);
+
+  const clearFocus = useCallback(() => {
+    setState((s) =>
+      s.focus
+        ? { ...s, focus: null, dismissedId: s.dismissedId === s.focus.id ? null : s.dismissedId }
+        : s,
     );
   }, []);
 
@@ -100,8 +128,8 @@ export function LeafTipProvider({ children }) {
   );
 
   const value = useMemo(
-    () => ({ active, isExpanded, hoverTip, leaveTip, focusTip, blurTip, pinTip, clearTips }),
-    [active, isExpanded, hoverTip, leaveTip, focusTip, blurTip, pinTip, clearTips],
+    () => ({ active, isExpanded, hoverTip, leaveTip, focusTip, blurTip, pinTip, clearHover, clearFocus, clearTips }),
+    [active, isExpanded, hoverTip, leaveTip, focusTip, blurTip, pinTip, clearHover, clearFocus, clearTips],
   );
 
   return <LeafTipContext.Provider value={value}>{children}</LeafTipContext.Provider>;

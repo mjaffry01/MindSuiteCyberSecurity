@@ -19,7 +19,7 @@ export function ServiceTree() {
   const [hover, setHover] = useState({ pillarId: pillars[1].id, service: null, chip: null });
   const [pin, setPin] = useState({ pillarId: pillars[1].id, service: null });
   const [focusId, setFocusId] = useState(nodeId("pillar", pillars[1].id));
-  const { hoverTip, leaveTip, focusTip, blurTip, clearTips } = useLeafTip();
+  const { hoverTip, focusTip, clearHover, clearFocus, clearTips } = useLeafTip();
   const defSlotId = `leafdef${useId().replace(/[^a-zA-Z0-9_-]+/g, "-")}`;
 
   const view = hover.pillarId || pin.pillarId ? hover : pin;
@@ -227,7 +227,15 @@ export function ServiceTree() {
                               </button>
                               {leafOpen && (
                                 <>
-                                  <ul className="vtree-list chips" role="group">
+                                  <ul
+                                    className="vtree-list chips"
+                                    role="group"
+                                    onMouseLeave={clearHover}
+                                    onBlur={(event) => {
+                                      if (event.currentTarget.contains(event.relatedTarget)) return;
+                                      clearFocus();
+                                    }}
+                                  >
                                     {entry.chips.map((chip) => {
                                       const chipId = nodeId("chip", item.id, `${entry.name}:${chip}`);
                                       const tipEntry = leafTipEntry(chip, chipId, defSlotId);
@@ -240,18 +248,13 @@ export function ServiceTree() {
                                             className={`vtree-row chip ${view.chip === chip ? "live" : ""}`}
                                             aria-selected={focusId === chipId}
                                             onMouseEnter={() => activate({ pillarId: item.id, service: entry.name, chip })}
-                                            onMouseOver={() => hoverTip(tipEntry)}
-                                            onMouseLeave={() => leaveTip(chipId)}
+                                            onMouseOver={tipEntry.tip ? () => hoverTip(tipEntry) : undefined}
                                             onFocus={(event) => {
-                                              focusTip(tipEntry);
+                                              if (tipEntry.tip) focusTip(tipEntry);
                                               // Focus bubbles up from the ? button; only the row itself claims the roving tabindex.
                                               if (event.target !== event.currentTarget) return;
                                               setFocusId(chipId);
                                               activate({ pillarId: item.id, service: entry.name, chip });
-                                            }}
-                                            onBlur={(event) => {
-                                              if (event.currentTarget.contains(event.relatedTarget)) return;
-                                              blurTip(chipId);
                                             }}
                                           >
                                             <Icon name={iconFor(chip)} size={14} strokeWidth={2} className="leaf-ico" />

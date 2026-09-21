@@ -22,19 +22,16 @@ export function LeafText({ label, tipKey, slotId }) {
   const tip = leafTips[label];
   const { active, isExpanded, hoverTip, leaveTip, focusTip, blurTip, pinTip } = useLeafTip();
 
+  // A term with no definition is plain text: no control, no listeners, no tip ARIA.
+  if (!tip) {
+    return <span className="leaf-plain">{label}</span>;
+  }
+
   const inline = !slotId;
   const entry = leafTipEntry(label, key, slotId);
   const pointer = inline
     ? { onMouseOver: () => hoverTip(entry), onMouseLeave: () => leaveTip(key) }
     : {};
-
-  if (!tip) {
-    return (
-      <span className="leaf-plain" {...pointer}>
-        {label}
-      </span>
-    );
-  }
 
   const open = active?.id === key;
 

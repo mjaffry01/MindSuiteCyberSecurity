@@ -12,7 +12,7 @@ export function NestedTree({ rootLabel, nodes, ariaLabel }) {
   const [pinId, setPinId] = useState(nodes[0]?.id);
   const activeId = hoverId || pinId || openId;
   const active = nodes.find((node) => node.id === activeId) || nodes[0];
-  const { hoverTip, leaveTip, focusTip, blurTip, clearTips } = useLeafTip();
+  const { hoverTip, focusTip, clearHover, clearFocus, clearTips } = useLeafTip();
   const defSlotId = `leafdef${useId().replace(/[^a-zA-Z0-9_-]+/g, "-")}`;
 
   // A collapsing branch unmounts its leaves; drop any definition they owned.
@@ -61,7 +61,15 @@ export function NestedTree({ rootLabel, nodes, ariaLabel }) {
                     </button>
                     {openNode && (
                       <>
-                        <ul className="vtree-list chips" role="group">
+                        <ul
+                          className="vtree-list chips"
+                          role="group"
+                          onMouseLeave={clearHover}
+                          onBlur={(event) => {
+                            if (event.currentTarget.contains(event.relatedTarget)) return;
+                            clearFocus();
+                          }}
+                        >
                           {node.gets.map((item) => {
                             const chipId = `${node.id}:${item}`;
                             const tipEntry = leafTipEntry(item, chipId, defSlotId);
@@ -70,13 +78,8 @@ export function NestedTree({ rootLabel, nodes, ariaLabel }) {
                                 <span
                                   className="vtree-row chip static"
                                   role="treeitem"
-                                  onMouseOver={() => hoverTip(tipEntry)}
-                                  onMouseLeave={() => leaveTip(chipId)}
-                                  onFocus={() => focusTip(tipEntry)}
-                                  onBlur={(event) => {
-                                    if (event.currentTarget.contains(event.relatedTarget)) return;
-                                    blurTip(chipId);
-                                  }}
+                                  onMouseOver={tipEntry.tip ? () => hoverTip(tipEntry) : undefined}
+                                  onFocus={tipEntry.tip ? () => focusTip(tipEntry) : undefined}
                                 >
                                   <Icon name={iconFor(item)} size={14} strokeWidth={2} className="leaf-ico" />
                                   <LeafText label={item} tipKey={chipId} slotId={defSlotId} />
