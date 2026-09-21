@@ -1,0 +1,18 @@
+# Normalize all text files to LF in the repository.
+# Working-copy line endings stay native; only the stored blobs are normalized.
+# This prevents phantom whole-file diffs from GitHub web-UI uploads (CRLF).
+* text=auto eol=lf
+
+# Binary assets: never normalize, never diff as text.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
