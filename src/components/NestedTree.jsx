@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { iconFor } from "../data/leafIcons.js";
 import { Icon } from "../icons.jsx";
+import { LeafText } from "./LeafText.jsx";
 import { OfferingPanel } from "./OfferingPanel.jsx";
 
 export function NestedTree({ rootLabel, nodes, ariaLabel }) {
@@ -51,12 +52,12 @@ export function NestedTree({ rootLabel, nodes, ariaLabel }) {
                       ) : null}
                     </button>
                     {openNode && (
-                      <ul className="vtree-list chips">
+                      <ul className="vtree-list chips" role="group">
                         {node.gets.map((item) => (
                           <li key={item} className="vtree-node">
-                            <span className="vtree-row chip static">
+                            <span className="vtree-row chip static" role="treeitem">
                               <Icon name={iconFor(item)} size={14} strokeWidth={2} className="leaf-ico" />
-                              <span>{item}</span>
+                              <LeafText label={item} />
                             </span>
                           </li>
                         ))}

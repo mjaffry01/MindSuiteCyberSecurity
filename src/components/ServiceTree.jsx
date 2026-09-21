@@ -4,6 +4,7 @@ import { pillars } from "../data/content.js";
 import { pillarOutcomes, serviceOutcomes } from "../data/offers.js";
 import { iconFor } from "../data/leafIcons.js";
 import { Icon } from "../icons.jsx";
+import { LeafText } from "./LeafText.jsx";
 import { OfferingPanel } from "./OfferingPanel.jsx";
 
 const ROOT = "root";
@@ -143,7 +144,7 @@ export function ServiceTree() {
             </span>
           ))}
         </div>
-        <p className="tree-hint">Hover a branch to open it. Click to pin. Arrow keys move; Enter pins.</p>
+        <p className="tree-hint">Hover a branch to open it. Click the ? on a technical term for a short definition. Click a branch to pin. Arrow keys move; Enter pins.</p>
 
         <ul className="vtree-list" role="group">
           <li className={`vtree-node root on-path`}>
@@ -220,9 +221,9 @@ export function ServiceTree() {
                                 <ul className="vtree-list chips" role="group">
                                   {entry.chips.map((chip) => (
                                     <li key={chip} className={`vtree-node ${view.chip === chip ? "on-path" : ""}`}>
-                                      <button
-                                        type="button"
+                                      <span
                                         role="treeitem"
+                                        tabIndex={-1}
                                         data-node={nodeId("chip", item.id, `${entry.name}:${chip}`)}
                                         className={`vtree-row chip ${view.chip === chip ? "live" : ""}`}
                                         aria-selected={focusId === nodeId("chip", item.id, `${entry.name}:${chip}`)}
@@ -233,8 +234,8 @@ export function ServiceTree() {
                                         }}
                                       >
                                         <Icon name={iconFor(chip)} size={14} strokeWidth={2} className="leaf-ico" />
-                                        <span>{chip}</span>
-                                      </button>
+                                        <LeafText label={chip} />
+                                      </span>
                                     </li>
                                   ))}
                                 </ul>

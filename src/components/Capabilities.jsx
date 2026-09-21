@@ -2,6 +2,7 @@ import { capabilities, frameworks } from "../data/content.js";
 import { iconFor } from "../data/leafIcons.js";
 import { useInView } from "../hooks.js";
 import { Icon } from "../icons.jsx";
+import { LeafText } from "./LeafText.jsx";
 
 export function Capabilities() {
   const [ref, visible] = useInView();
@@ -49,7 +50,9 @@ export function Capabilities() {
           {frameworks.map((item) => (
             <li key={item.name}>
               <Icon name={iconFor(item.name)} size={14} strokeWidth={2} className="leaf-ico" />
-              <strong>{item.name}</strong>
+              <strong>
+                <LeafText label={item.name} />
+              </strong>
               <span>{item.detail}</span>
             </li>
           ))}

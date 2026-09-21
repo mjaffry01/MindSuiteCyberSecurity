@@ -6,6 +6,7 @@ import { Contact } from "./components/Contact.jsx";
 import { Footer } from "./components/Footer.jsx";
 import { Hero } from "./components/Hero.jsx";
 import { Industries } from "./components/Industries.jsx";
+import { LeafTipProvider } from "./components/LeafTipContext.jsx";
 import { Navbar } from "./components/Navbar.jsx";
 import { Services } from "./components/Services.jsx";
 import { navItems } from "./data/content.js";
@@ -16,7 +17,7 @@ export default function App() {
   const active = useActiveSection(sectionIds);
 
   return (
-    <>
+    <LeafTipProvider>
       <a className="skip-link" href="#services">
         Skip to content
       </a>
@@ -33,6 +34,6 @@ export default function App() {
         </main>
         <Footer />
       </div>
-    </>
+    </LeafTipProvider>
   );
 }

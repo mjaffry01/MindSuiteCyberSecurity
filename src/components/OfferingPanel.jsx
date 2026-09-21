@@ -1,5 +1,6 @@
 import { iconFor } from "../data/leafIcons.js";
 import { Icon } from "../icons.jsx";
+import { LeafText } from "./LeafText.jsx";
 
 export function OfferingPanel({ title, kicker, what, gets, outcome, cta = "Request scope", href = "#contact" }) {
   return (
@@ -14,7 +15,7 @@ export function OfferingPanel({ title, kicker, what, gets, outcome, cta = "Reque
             {gets.map((item) => (
               <li key={item}>
                 <Icon name={iconFor(item)} size={14} strokeWidth={2} className="leaf-ico" />
-                <span>{item}</span>
+                <LeafText label={item} />
               </li>
             ))}
           </ul>
