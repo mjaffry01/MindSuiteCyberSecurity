@@ -30,8 +30,7 @@ const LeafTipContext = createContext({
 export function LeafTipProvider({ children }) {
   const [state, setState] = useState(EMPTY);
 
-  // A leaf with no definition never writes to the shared state, so pointing at one
-  // cannot blank or steal the definition a sibling is showing.
+  // Only a defined term can put something in the strip; callers clear it for the rest.
   const hoverTip = useCallback((entry) => {
     if (!entry?.tip) return;
     setState((s) =>
@@ -75,10 +74,9 @@ export function LeafTipProvider({ children }) {
   }, []);
 
   /**
-   * Group-scoped release. A leaf group clears hover only when the pointer leaves the
-   * whole group, not each individual leaf, so sweeping across tipless leaves between
-   * two defined terms leaves the strip showing the last definition instead of
-   * flickering off and on again.
+   * Release the hovered definition: on reaching a leaf with no definition, and on
+   * leaving the group. A pinned or focused definition survives, since those are
+   * deliberate; only the pointer's own reading is dropped.
    */
   const clearHover = useCallback(() => {
     setState((s) =>

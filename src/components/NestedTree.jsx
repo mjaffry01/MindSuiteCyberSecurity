@@ -78,8 +78,8 @@ export function NestedTree({ rootLabel, nodes, ariaLabel }) {
                                 <span
                                   className="vtree-row chip static"
                                   role="treeitem"
-                                  onMouseOver={tipEntry.tip ? () => hoverTip(tipEntry) : undefined}
-                                  onFocus={tipEntry.tip ? () => focusTip(tipEntry) : undefined}
+                                  onMouseOver={() => (tipEntry.tip ? hoverTip(tipEntry) : clearHover())}
+                                  onFocus={() => (tipEntry.tip ? focusTip(tipEntry) : clearFocus())}
                                 >
                                   <Icon name={iconFor(item)} size={14} strokeWidth={2} className="leaf-ico" />
                                   <LeafText label={item} tipKey={chipId} slotId={defSlotId} />

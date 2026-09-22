@@ -248,9 +248,12 @@ export function ServiceTree() {
                                             className={`vtree-row chip ${view.chip === chip ? "live" : ""}`}
                                             aria-selected={focusId === chipId}
                                             onMouseEnter={() => activate({ pillarId: item.id, service: entry.name, chip })}
-                                            onMouseOver={tipEntry.tip ? () => hoverTip(tipEntry) : undefined}
+                                            // Reaching a leaf with no definition empties the strip rather than
+                                            // leaving the last term's definition stranded under the pointer.
+                                            onMouseOver={() => (tipEntry.tip ? hoverTip(tipEntry) : clearHover())}
                                             onFocus={(event) => {
                                               if (tipEntry.tip) focusTip(tipEntry);
+                                              else clearFocus();
                                               // Focus bubbles up from the ? button; only the row itself claims the roving tabindex.
                                               if (event.target !== event.currentTarget) return;
                                               setFocusId(chipId);
