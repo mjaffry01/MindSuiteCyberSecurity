@@ -2,7 +2,7 @@ import { useEffect, useId, useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { iconFor } from "../data/leafIcons.js";
 import { Icon } from "../icons.jsx";
-import { LeafDefSlot, LeafText, leafTipEntry } from "./LeafText.jsx";
+import { LeafDefSlot, LeafText, groupHasTips, leafTipEntry } from "./LeafText.jsx";
 import { useLeafTip } from "./LeafTipContext.jsx";
 import { OfferingPanel } from "./OfferingPanel.jsx";
 
@@ -88,7 +88,7 @@ export function NestedTree({ rootLabel, nodes, ariaLabel }) {
                             );
                           })}
                         </ul>
-                        <LeafDefSlot slotId={defSlotId} />
+                        {groupHasTips(node.gets) ? <LeafDefSlot slotId={defSlotId} /> : null}
                       </>
                     )}
                   </li>

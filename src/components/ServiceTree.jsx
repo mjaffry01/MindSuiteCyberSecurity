@@ -4,7 +4,7 @@ import { pillars } from "../data/content.js";
 import { pillarOutcomes, serviceOutcomes } from "../data/offers.js";
 import { iconFor } from "../data/leafIcons.js";
 import { Icon } from "../icons.jsx";
-import { LeafDefSlot, LeafText, leafTipEntry } from "./LeafText.jsx";
+import { LeafDefSlot, LeafText, groupHasTips, leafTipEntry } from "./LeafText.jsx";
 import { useLeafTip } from "./LeafTipContext.jsx";
 import { OfferingPanel } from "./OfferingPanel.jsx";
 
@@ -264,7 +264,7 @@ export function ServiceTree() {
                                       );
                                     })}
                                   </ul>
-                                  <LeafDefSlot slotId={defSlotId} />
+                                  {groupHasTips(entry.chips) ? <LeafDefSlot slotId={defSlotId} /> : null}
                                 </>
                               )}
                             </li>

@@ -7,6 +7,14 @@ export function leafTipEntry(label, key, slotId) {
   return { id: key, label, tip: leafTips[label] ?? null, slot: slotId ?? null };
 }
 
+/**
+ * Whether a group of leaves can ever show a definition. A group where nothing is
+ * defined reserves no strip: there is no layout to protect and no hint to give.
+ */
+export function groupHasTips(labels) {
+  return (labels ?? []).some((label) => Boolean(leafTips[label]));
+}
+
 function panelIdFor(key) {
   return `leaftip-${key.replace(/[^a-zA-Z0-9_-]+/g, "-")}`;
 }
