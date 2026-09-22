@@ -675,6 +675,12 @@ p { margin: 0; }
   display: block;
 }
 
+/* Nothing is showing yet: hold the reserved height, but paint no empty panel. */
+.leaf-def.is-slot.is-empty {
+  border-color: transparent;
+  background: transparent;
+}
+
 .leaf-def-term {
   margin-right: 6px;
   font-weight: 700;

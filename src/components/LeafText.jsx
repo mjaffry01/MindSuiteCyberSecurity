@@ -71,22 +71,29 @@ export function LeafText({ label, tipKey, slotId }) {
   );
 }
 
-/** Reserved, always-present strip that a tree renders below an open leaf group. */
+/**
+ * Reserved strip that a tree renders below a leaf group holding at least one
+ * definition. It stays empty and unpainted until a definition is active; the height
+ * it reserves is what stops chips shifting under the pointer.
+ */
 export function LeafDefSlot({ slotId }) {
   const { active } = useLeafTip();
   const shown = active && active.slot === slotId && active.tip ? active : null;
 
   return (
     <div className="leaf-def-slot">
-      <p className="leaf-def is-slot" id={slotId} role="note" aria-live="polite">
+      <p
+        className={`leaf-def is-slot${shown ? "" : " is-empty"}`}
+        id={slotId}
+        role="note"
+        aria-live="polite"
+      >
         {shown ? (
           <span className="leaf-def-body" key={shown.id}>
             <span className="leaf-def-term">{shown.label}</span>
             {shown.tip}
           </span>
-        ) : (
-          <span className="leaf-def-idle">Hover a term for a plain-language definition.</span>
-        )}
+        ) : null}
       </p>
     </div>
   );
