@@ -238,7 +238,7 @@ export function ServiceTree() {
                                   >
                                     {entry.chips.map((chip) => {
                                       const chipId = nodeId("chip", item.id, `${entry.name}:${chip}`);
-                                      const tipEntry = leafTipEntry(chip, chipId, defSlotId);
+                                      const tipEntry = leafTipEntry(chip, chipId, defSlotId, entry.name);
                                       return (
                                         <li key={chip} className={`vtree-node ${view.chip === chip ? "on-path" : ""}`}>
                                           <span
@@ -261,13 +261,13 @@ export function ServiceTree() {
                                             }}
                                           >
                                             <Icon name={iconFor(chip)} size={14} strokeWidth={2} className="leaf-ico" />
-                                            <LeafText label={chip} tipKey={chipId} slotId={defSlotId} />
+                                            <LeafText label={chip} tipKey={chipId} slotId={defSlotId} scope={entry.name} />
                                           </span>
                                         </li>
                                       );
                                     })}
                                   </ul>
-                                  {groupHasTips(entry.chips) ? <LeafDefSlot slotId={defSlotId} /> : null}
+                                  {groupHasTips(entry.chips, entry.name) ? <LeafDefSlot slotId={defSlotId} /> : null}
                                 </>
                               )}
                             </li>

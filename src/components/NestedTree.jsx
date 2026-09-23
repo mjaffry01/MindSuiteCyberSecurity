@@ -6,7 +6,7 @@ import { LeafDefSlot, LeafText, groupHasTips, leafTipEntry } from "./LeafText.js
 import { useLeafTip } from "./LeafTipContext.jsx";
 import { OfferingPanel } from "./OfferingPanel.jsx";
 
-export function NestedTree({ rootLabel, nodes, ariaLabel }) {
+export function NestedTree({ rootLabel, nodes, ariaLabel, defineWhat = true }) {
   const [openId, setOpenId] = useState(nodes[0]?.id);
   const [hoverId, setHoverId] = useState(nodes[0]?.id);
   const [pinId, setPinId] = useState(nodes[0]?.id);
@@ -105,6 +105,7 @@ export function NestedTree({ rootLabel, nodes, ariaLabel }) {
         gets={active.gets}
         outcome={active.outcome}
         cta={active.cta || "Talk to a specialist"}
+        defineWhat={defineWhat}
       />
     </div>
   );

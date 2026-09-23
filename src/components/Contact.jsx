@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowRight, CheckCircle2, Mail, MapPin, Phone } from "lucide-react";
 import { contact } from "../data/content.js";
+import { DefinedText } from "./LeafText.jsx";
 import { useInView } from "../hooks.js";
 
 const empty = { name: "", email: "", company: "", interest: "vCISO & advisory", message: "" };
@@ -27,8 +28,7 @@ export function Contact() {
           <p className="eyebrow">Start a conversation</p>
           <h2>Tell us what the board needs to decide next.</h2>
           <p className="lead">
-            Assessment, a vCISO retainer, AI risk, or a full operating program. We
-            reply with a scoped next step.
+            <DefinedText text="Assessment, a vCISO retainer, AI risk, or a full operating program. We reply with a scoped next step." />
           </p>
           <ul className="contact-meta">
             <li>

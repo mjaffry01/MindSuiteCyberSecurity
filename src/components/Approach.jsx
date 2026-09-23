@@ -37,7 +37,7 @@ export function Approach() {
             Each step has deliverables. Open one to see them.
           </p>
         </div>
-        <NestedTree rootLabel="The path" nodes={motionNodes} ariaLabel="How the work proceeds" />
+        <NestedTree rootLabel="The path" nodes={motionNodes} ariaLabel="How the work proceeds" defineWhat={false} />
       </div>
     </section>
   );

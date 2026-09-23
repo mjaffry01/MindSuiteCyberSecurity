@@ -1,6 +1,7 @@
 import { industries, reasons } from "../data/content.js";
 import { industryFocus } from "../data/offers.js";
 import { Icon } from "../icons.jsx";
+import { DefinedText } from "./LeafText.jsx";
 import { NestedTree } from "./NestedTree.jsx";
 import { useInView } from "../hooks.js";
 
@@ -38,7 +39,9 @@ export function Industries() {
               <Icon name={item.icon} size={18} />
               <div>
                 <h3>{item.title}</h3>
-                <p>{item.text}</p>
+                <p>
+                  <DefinedText text={item.text} />
+                </p>
               </div>
             </article>
           ))}

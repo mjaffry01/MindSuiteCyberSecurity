@@ -599,6 +599,8 @@ p { margin: 0; }
   gap: 4px 6px;
   min-width: 0;
   max-width: 100%;
+  position: relative;
+  overflow-anchor: none;
 }
 
 .leaf-label {
@@ -630,27 +632,66 @@ p { margin: 0; }
   box-shadow: var(--focus);
 }
 
-.leaf-name.is-open .leaf-tip-btn {
+.leaf-name.is-open .leaf-tip-btn,
+.leaf-tip-btn.is-on {
   background: var(--color-indigo);
   border-color: var(--color-indigo);
   color: #fff;
 }
 
-/* Always claims its own line so revealing it never moves the label or the ? button. */
+/*
+ * Inline definitions float over the page. Growing them in the line moved the ?
+ * out from under the pointer, so the tip opened and closed in a loop.
+ */
 .leaf-def {
-  flex: 1 1 100%;
-  min-width: 100%;
   margin: 0;
-  padding: 5px 8px;
+  padding: 8px 10px;
   border-radius: 8px;
   border: 1px solid color-mix(in srgb, var(--color-indigo) 22%, white);
-  background: color-mix(in srgb, var(--color-indigo) 8%, white);
+  background: #f6f5fb;
   color: var(--color-muted);
   font-size: var(--text-xs);
   font-weight: 500;
   line-height: 1.45;
   letter-spacing: 0;
   text-align: left;
+  overflow-anchor: none;
+}
+
+.leaf-def:not(.is-slot) {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 6px);
+  left: 0;
+  width: max(17rem, 100%);
+  max-width: min(22rem, calc(100vw - 32px));
+  box-shadow: 0 10px 28px rgba(28, 22, 58, 0.16);
+}
+
+.leaf-def:not(.is-slot)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -8px;
+  height: 8px;
+}
+
+/* Capability headings are full card width, so the panel covers the blurb instead of a narrow strip. */
+.cap-lead h3,
+.cap-row h3 {
+  position: relative;
+}
+
+.cap-lead h3 .leaf-name,
+.cap-row h3 .leaf-name {
+  position: static;
+}
+
+.cap-lead h3 .leaf-def:not(.is-slot),
+.cap-row h3 .leaf-def:not(.is-slot) {
+  width: 100%;
+  max-width: none;
 }
 
 .vtree-row.chip .leaf-name {
@@ -693,6 +734,133 @@ p { margin: 0; }
   animation: leaf-def-in var(--dur-med) var(--ease) both;
 }
 
+.leaf-def-body:has(.def-tree) {
+  display: block;
+  width: 100%;
+}
+
+.def-tree {
+  list-style: none;
+  width: 100%;
+  margin: 6px 0 0;
+  padding: 2px 0 2px 10px;
+  border-left: 2px solid color-mix(in srgb, var(--color-indigo) 32%, white);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.35;
+  color: var(--color-ink);
+}
+
+.def-tree-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  min-width: 0;
+}
+
+.def-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--color-ink);
+}
+
+.def-tree-label {
+  min-width: 0;
+}
+
+.def-tree-note {
+  margin: 0;
+  color: var(--color-muted);
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.def-multi {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.def-lead {
+  display: block;
+}
+
+.def-carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.def-carousel-slide {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 3.6rem;
+}
+
+.def-carousel-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.def-carousel-btn {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--color-indigo) 35%, white);
+  border-radius: 999px;
+  background: white;
+  color: var(--color-indigo);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.def-carousel-btn:hover {
+  background: color-mix(in srgb, var(--color-indigo) 12%, white);
+}
+
+.def-carousel-btn:focus-visible {
+  box-shadow: var(--focus);
+}
+
+.def-carousel-count {
+  color: var(--color-faint);
+  font-weight: 650;
+  font-size: var(--text-xs);
+}
+
+.cap-lead .leaf-def,
+.cap-lead .def-tree,
+.cap-lead .def-tree-row,
+.cap-row .leaf-def,
+.cap-row .def-tree,
+.cap-row .def-tree-row {
+  color: var(--color-ink);
+}
+
+.cap-lead .def-tree-note,
+.cap-row .def-tree-note,
+.cap-lead .leaf-def,
+.cap-row .leaf-def {
+  color: var(--color-muted);
+}
+
+.cap-lead .def-tree-row,
+.cap-row .def-tree-row {
+  color: var(--color-ink);
+}
+
 @keyframes leaf-def-in {
   from { opacity: 0; transform: translateY(2px); }
   to { opacity: 1; transform: none; }
@@ -710,6 +878,11 @@ p { margin: 0; }
 .offer-gets .leaf-name {
   flex: 1;
   min-width: 0;
+}
+
+.offer-gets + .leaf-def-slot,
+.offer-panel .leaf-def-slot {
+  margin-left: 22px;
 }
 
 .leaf-ico {
@@ -836,6 +1009,118 @@ p { margin: 0; }
 }
 
 .cap-lead p { color: rgba(255, 255, 255, 0.82); margin-top: var(--space-2); }
+
+.cap-lead p.cap-lead-def {
+  margin: 8px 0 0;
+  max-width: 38em;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.cap-carousel {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  display: grid;
+  gap: 12px;
+}
+
+.cap-carousel-slide {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 28px;
+  grid-template-rows: auto auto;
+  column-gap: 8px;
+  row-gap: 4px;
+  align-items: center;
+  animation: cap-slide-in 320ms var(--ease);
+}
+
+.cap-carousel-kicker {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.cap-carousel .leaf-ico {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.cap-lead .cap-carousel-copy {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.cap-carousel-btn {
+  width: 28px;
+  height: 28px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cap-carousel-slide .cap-carousel-btn:first-child {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+.cap-carousel-slide .cap-carousel-btn:last-child {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.cap-carousel-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.cap-carousel-btn:focus-visible,
+.cap-carousel-dot:focus-visible {
+  box-shadow: var(--focus);
+}
+
+.cap-carousel-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.cap-carousel-dot {
+  width: 6px;
+  height: 6px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.38);
+  cursor: pointer;
+}
+
+.cap-carousel-dot.is-on {
+  width: 16px;
+  background: #fff;
+}
+
+@keyframes cap-slide-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
 
 .cap-top {
   display: flex;

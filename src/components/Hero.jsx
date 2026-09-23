@@ -1,6 +1,7 @@
 import { ArrowRight, Play } from "lucide-react";
 import { heroStats } from "../data/content.js";
 import { useInView } from "../hooks.js";
+import { DefinedText } from "./LeafText.jsx";
 import { Icon } from "../icons.jsx";
 
 const orbitNodes = [
@@ -44,9 +45,7 @@ export function Hero() {
               <span>share one picture.</span>
             </h1>
             <p className="hero-copy">
-              vCISO advisory, AI security, and threat intelligence sit with 24/7
-              monitoring. Directors fund the right work. Operators detect, contain,
-              and recover.
+              <DefinedText text="vCISO advisory, AI security, and threat intelligence sit with 24/7 monitoring. Directors fund the right work. Operators detect, contain, and recover." />
             </p>
             <div className="hero-actions">
               <a className="btn btn-primary" href="#services">

@@ -1,5 +1,5 @@
 export const serviceOutcomes = {
-  "Threat Assessments": "A shared picture of how critical assets can be abused, and in what order to treat them.",
+  "Threat & Offensive Testing": "A shared picture of how critical assets can be abused, and in what order to treat them.",
   "Threat Intelligence": "Board and SOC see the same actor, credential, and dark-web context.",
   "Red Team Simulation": "An objective test of whether detection and response hold under a real adversary.",
   "Penetration Testing": "A scoped finding set with a clear boundary against scan work and red-team work.",
@@ -8,9 +8,8 @@ export const serviceOutcomes = {
   "Data Protection": "Classification, DLP, and encryption sit in one data-security program.",
   "AI Security": "Models, copilots, and prompts are inventoried, tested, and governed.",
   "Identity & Access Management": "Workforce, privileged, and machine identity become the control plane.",
-  "OT / ICS Security": "Plant and industrial assets are visible, segmented, and change-controlled.",
+  "OT / ICS Security": "Plant and industrial assets are visible, segmented, and change controlled.",
   "Zero Trust Architecture": "Access is designed around identity and continuous verification.",
-  "Security Awareness & Training": "Human risk is measured and reduced with role-based practice.",
   "Compliance Services": "One evidence program the auditor and the board can share.",
   "Security Governance": "Policies and decision rights the enterprise can actually operate.",
   "Risk Management": "A register and treatment plan directors can fund.",
@@ -19,7 +18,7 @@ export const serviceOutcomes = {
   "Vulnerability Management": "Findings are prioritized and verified closed.",
   "Application Security": "SSDLC, SAST/DAST, and API work sit in one program the product team can run.",
   "Exposure Management": "Internet-facing assets are visible as an attack surface, not only a CVE list.",
-  "Remediation Management": "Owners, tickets, and retests so findings actually close.",
+  "Remediation Management": "Owners, tickets, and retests so findings close.",
   "Incident Response": "A retainer and playbooks ready when minutes matter.",
   "Digital Forensics": "Evidence and root cause handled apart from the SOC watch.",
   "Ransomware Readiness": "Backup, isolation, and decisions rehearsed before an extortion note.",
@@ -49,5 +48,5 @@ export const motionGets = {
   Architect: ["Reference design", "Identity and Zero Trust", "Cloud and OT fit"],
   Protect: ["Control program", "Endpoint and network", "Data and model guardrails"],
   Detect: ["SOC and SIEM", "Intelligence into decisions", "Single SOC picture"],
-  Recover: ["Containment path", "Investigation", "Restore and rehearsal"],
+  Recover: ["Contain the Threat", "Investigate the Cause", "Restore Priority Services"],
 };
