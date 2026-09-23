@@ -992,10 +992,12 @@ p { margin: 0; }
 .cap-layout {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
+  align-items: start;
   gap: var(--space-3);
 }
 
 .cap-lead {
+  align-self: start;
   padding: var(--space-5);
   border-radius: var(--radius-lg);
   background: var(--brand);
